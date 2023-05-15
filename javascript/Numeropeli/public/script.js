@@ -24,7 +24,7 @@ function checkNumber() {
         console.log("Correct")
     } 
 
-    if(playerInput > 100) {
+    if(playerInput < lowlimit || playerInput > highlimit) {
         var result = document.getElementById("result");
         result.textContent = "Error";
         console.log("Error")
