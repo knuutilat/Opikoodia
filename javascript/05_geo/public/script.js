@@ -3,7 +3,7 @@ function findMe() {
     const status = document.querySelector("#status");
     const mapLink = document.querySelector("#maplink");
 
-    mapLink.hred = "";
+    mapLink.href = "";
     mapLink.textContent = "";
 
     function success(position) {
