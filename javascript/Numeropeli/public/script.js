@@ -1,4 +1,6 @@
-window.onload = rollNumber;
+window.onload = function () {
+    rollNumber();
+}
 
 var randomNumber
 var guesscount = 0;
@@ -13,7 +15,6 @@ function rollNumber(min,max) {
     
 }
 function checkNumber() {
-    guesscount += 1;
     document.getElementById("guesscount").innerHTML = guesscount;
     var playerInput = document.getElementById("number").value;
     console.log(playerInput)
@@ -24,28 +25,33 @@ function checkNumber() {
         console.log("Correct")
     } 
 
-    if(playerInput < lowlimit || playerInput > highlimit) {
+    if(playerInput > lowlimit && playerInput < highlimit) {
+        guesscount++;
+        if(playerInput < randomNumber) {
+            var result = document.getElementById("result");
+            result.textContent = "Too small";
+            console.log("Too small")
+            lowlimit = playerInput;
+            document.getElementById("low").innerHTML = lowlimit;
+        }
+
+        if(playerInput > randomNumber) {
+            var result = document.getElementById("result");
+            result.textContent = "Too big";
+            console.log("Too big")
+            highlimit = playerInput;
+            document.getElementById("high").innerHTML = highlimit;
+        }
+}   else {
         var result = document.getElementById("result");
         result.textContent = "Error";
         console.log("Error")
-
-    }
-    
-    if(playerInput < randomNumber) {
+        if (isNaN(playerInput)) {
         var result = document.getElementById("result");
-        result.textContent = "Too small";
-        console.log("Too small")
-        lowlimit = playerInput;
-        document.getElementById("low").innerHTML = lowlimit;
-    }
-
-    if(playerInput > randomNumber) {
-        var result = document.getElementById("result");
-        result.textContent = "Too big";
-        console.log("Too big")
-        highlimit = playerInput;
-        document.getElementById("high").innerHTML = highlimit;
-    }
+        result.textContent = "Error";
+        console.log("Error")
+}
+}
 
     
 }
