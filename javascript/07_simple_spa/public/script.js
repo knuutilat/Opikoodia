@@ -1,3 +1,5 @@
+var mode = 0;
+
 window.onload = function () {
     createForm();
     getContactList();
@@ -108,12 +110,25 @@ addContact = async () => {
         },
         "body":JSON.stringify(contact)
     }
+    if(mode) {
+        url="/api/contact/"+mode;
+        request = {
+            "method":"PUT",
+            "headers": {
+                "Content-Type":"application/json"
+            },
+            "body":JSON.stringify(contact)   
+        }
+    }
     const response = await fetch(url,request);
     if(response.ok) {
         firstname.value = "";
         lastname.value = "";
         email.value = "";
         phone.value = "";
+        mode = 0;
+        const submitButton = document.getElementById("submitbutton");
+        submitButton.value = "Add";
         getContactList();
     } else {
         console.log("Server responded with status "+response.status+" "+response.statusText);
@@ -131,6 +146,32 @@ getContactList = async () => {
 		console.log("Server responded with a status "+response.status+" "+response.statusText);
 	}
 } 
+
+removeContact = async (id) => {
+    let request = {
+        "method":"DELETE"
+    }
+    const response = await fetch ("/api/contact/"+id,request);
+    if(response.ok) {
+        getContactList();
+    } else {
+        console.log("Server responded with a status "+response.status+""+response.statusText);
+    }
+}
+
+editContact = (contact) => {
+    const firstname = document.getElementById("firstname");
+    const lastname = document.getElementById("lastname");
+    const email = document.getElementById("email");
+    const phone = document.getElementById("phone");
+    firstname.value = contact.firstname;
+    lastname.value = contact.lastname;
+    email.value = contact.email;
+    phone.value = contact.phone;
+    mode = contact.id;
+    const submitButton = document.getElementById("submitbutton");
+    submitButton.value = "Save";
+}
 
 populateTable = (list) => {
     const root = document.getElementById("root");
@@ -195,7 +236,7 @@ populateTable = (list) => {
         const removeButtonText = document.createTextNode("Remove");
         removeButton.appendChild(removeButtonText);
         removeButton.addEventListener("click",function(e) {
-            console.log(list[i].id)
+            removeContact(list[i].id);
         })
 
         const editColumn = document.createElement("td");
@@ -204,7 +245,7 @@ populateTable = (list) => {
         const editButtonText = document.createTextNode("Edit");
         editButton.appendChild(editButtonText);
         editButton.addEventListener("click",function(e) {
-            console.log(list[i]);
+            editContact(list[i]);
         })
         removeColumn.appendChild(removeButton);
         editColumn.appendChild(editButton);
