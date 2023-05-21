@@ -1,0 +1,6 @@
+Naapuriapu WebApp
+
+-Vaihtotalouteen perustuva palvelu
+-Voi ilmoittaa tarjoavansa tai tarvitsevansa esim. työkaluja, kantoapua jne.
+-Kolme kategoriaa: Laina, kierrätys, apu
+
