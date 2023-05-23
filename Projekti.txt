@@ -7,3 +7,6 @@ Naapuriapu WebApp
  Apu - kantoapu, pihatyöt jne.
 -Voi ilmoittaa joko tarvitsevansa tai tarjoavansa jotakin näistä kategorioista.
 
+Ilmoitusten jättäminen
+Käyttäjien arviointisysteemi, arvioihin perustuen tagit esim. "auttaja"
+
