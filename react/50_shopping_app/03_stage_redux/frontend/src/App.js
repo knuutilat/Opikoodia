@@ -5,6 +5,7 @@ import ShoppingList from './components/ShoppingList';
 import Navbar from './components/Navbar';
 import LoginPage from './components/LoginPage';
 import {Routes,Route,Navigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 function App() {
 
@@ -16,6 +17,8 @@ function App() {
     error:"",
     user:""
   })
+
+  const appState = useSelector(state => state);
 
 
   const [urlRequest,setUrlRequest] = useState ({
@@ -185,7 +188,7 @@ function App() {
   //REST API
 
   const getList = (token,search) => {
-    let tempToken = state.token;
+    let tempToken = appState.token;
     if(token) {
       tempToken = token;
     }
@@ -212,7 +215,7 @@ function App() {
         "method":"POST",
         "headers":{
           "Content-Type":"application/json",
-          "token":state.token
+          "token":appState.token
         },
         "body":JSON.stringify(item)
       },
@@ -226,7 +229,7 @@ function App() {
       request:{
         "method":"DELETE",
         "headers":{
-          "token":state.token
+          "token":appState.token
         }
       },
       action:"removeitem"
@@ -240,7 +243,7 @@ function App() {
         "method":"PUT",
         "headers":{
           "Content-Type":"application/json",
-          "token":state.token
+          "token":appState.token
         },
         "body":JSON.stringify(item)
       },
@@ -290,7 +293,7 @@ function App() {
     request:{
       method:"POST",
       headers:{
-        "token":state.token
+        "token":appState.token
       }
     },
     action:"logout"
@@ -299,16 +302,16 @@ function App() {
   // RENDERING
 
   let message =<h4></h4>
-  if(state.loading) {
+  if(appState.loading) {
     message = <h4>Loading ...</h4>
   }
-  if(state.error) {
-    message = <h4>{state.error}</h4>
+  if(appState.error) {
+    message = <h4>{appState.error}</h4>
   }
-  if(state.isLogged){
+  if(appState.isLogged){
   return (
     <div className="App">
-      <Navbar logout={logout} isLogged={state.isLogged} user={state.user}/>
+      <Navbar/>
       <div style={{height:25, textAlign:"center"}}>{message}</div>
       <Routes>
         <Route path="/" element={<ShoppingList list={state.list} removeItem={removeItem}
@@ -322,12 +325,12 @@ function App() {
   }else {
 		return(
 			<div className="App">
-				<Navbar logout={logout} isLogged={state.isLogged} user={state.user}/>
+				<Navbar/>
 				<div style={{height:25, textAlign:"center"}}>
 					{message}
 				</div>
 				<Routes>			
-					<Route path="/" element={<LoginPage login={login} register={register} setError={setError}/>}/>
+					<Route path="/" element={<LoginPage/>}/>
 					<Route path="*" element={<Navigate to="/"/>}/>
 				</Routes>
 			</div>		
