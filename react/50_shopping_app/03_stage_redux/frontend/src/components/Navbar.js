@@ -7,7 +7,7 @@ const Navbar = (props) => {
     const dispatch = useDispatch();
     const state = useSelector(state => state);
 
-if (state.isLogged){
+if (state.login.isLogged){
     return(
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <p className="navbar-brand" style={{marginLeft:10}}>Shopping App</p>
@@ -19,10 +19,10 @@ if (state.isLogged){
                     <Link to="/form" className="nav-link">Add new item</Link>
                 </li>
                 <li className="nav-item" style={{marginLeft:10}}>
-                    <Link to="/" className="nav-link" onClick={() => dispatch(logout(state.token))}>Logout</Link>
+                    <Link to="/" className="nav-link" onClick={() => dispatch(logout(state.login.token))}>Logout</Link>
                 </li>
                 <li className="nav-item" style={{marginLeft:10}}>
-                    <p className="nav-link" style={{color:"blue"}}>Logged in as {state.user}</p>
+                    <p className="nav-link" style={{color:"blue"}}>Logged in as {state.login.user}</p>
                 </li>
             </ul>
         </nav>

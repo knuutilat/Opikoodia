@@ -49,7 +49,7 @@ const loginReducer = (state = initialState,action) => {
             tempState = {
                 ...state,
                 token:action.token,
-                islogged:true
+                isLogged:true
             }
             saveToStorage(tempState);
             return tempState;

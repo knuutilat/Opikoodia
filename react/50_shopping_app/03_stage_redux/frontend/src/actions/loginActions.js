@@ -1,4 +1,5 @@
 import * as actionConstants from './actionConstants';
+import { getList } from './shoppingActions';
 
 //ASYNC THUNKS
 
@@ -50,10 +51,11 @@ export const login = (user) => {
         if(response.ok) {
             const data = await response.json();
             if(!data) {
-                dispatch(loginFailed("Login failed. Cannot parse login information"));
+                dispatch(loginFailed("Login failed. Cannot parse login information."));
                 return;
             }
             dispatch(loginSuccess(data.token));
+            dispatch(getList(data.token));
             dispatch(setUsername(user.username));
         } else {
             dispatch(loginFailed("Login failed. Server responded with a status"
