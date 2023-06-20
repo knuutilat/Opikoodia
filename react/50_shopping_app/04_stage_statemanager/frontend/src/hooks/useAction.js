@@ -61,39 +61,38 @@ const useAction = () => {
 							"type":actionConstants.LOGOUT_SUCCESS
 						})
 						return;
-                    case "getlist":
-                        const list = await response.json();
-                        if(!list) {
-                            dispatch({
-                                "type":actionConstants.FETCH_LIST_FAILED,
-                                "error":"Failed to parse shopping information. Try again later."
-                            })
-                        return;
-                        }
-                        dispatch({
-                            "type":actionConstants.FETCH_LIST_SUCCESS,
-                            list:list
-                        })
-                        getList();
-                        return;
-                    case "add":
-                        dispatch({
-                            "type":actionConstants.ADD_ITEM_SUCCESS
-                        })
-                        getList();
-                        return;
-                    case "remove":
-                        dispatch({
-                            "type":actionConstants.REMOVE_ITEM_SUCCESS
-                        })
-                        getList();
-                        return;
-                    case "edit":
-                        dispatch({
-                            "type":actionConstants.EDIT_ITEM_SUCCESS
-                        })
-                        getList();
-                        return;
+					case "getlist":
+						const list = await response.json();
+						if(!list) {
+							dispatch({
+								"type":actionConstants.FETCH_LIST_FAILED,
+								"error":"Failed to parse shopping information. Try again later."
+							})
+							return;
+						}
+						dispatch({
+							"type":actionConstants.FETCH_LIST_SUCCESS,
+							"list":list
+						})
+						return;
+					case "add":
+						dispatch({
+							"type":actionConstants.ADD_ITEM_SUCCESS
+						})
+						getList();
+						return;
+					case "remove":
+						dispatch({
+							"type":actionConstants.REMOVE_ITEM_SUCCESS
+						})
+						getList();
+						return;
+					case "edit":
+						dispatch({
+							"type":actionConstants.EDIT_ITEM_SUCCESS
+						})
+						getList();
+						return;					
 					default:
 						return;
 				}
@@ -132,28 +131,30 @@ const useAction = () => {
 							"error":"Server responded with an error. Logging you out."
 						})
 						return;
-                    case "getlist":
-                        dispatch({
-                            "type":actionConstants.FETCH_LIST_FAILED,
-                            "error":"Failed to fetch shopping information."+errorMessage
-                        })
-                        return;
-                    case "add":
-                        dispatch({
-                            "type":actionConstants.ADD_ITEM_FAILED,
-                            "error":"Failed to add new item."+errorMessage
-                        })
-                    case "remove":
-                        dispatch({
-                            "type":actionConstants.REMOVE_ITEM_FAILED,
-                            "error":"Failed to remove item."+errorMessage
-                        })
-                    case "edit":
-                        dispatch({
-                            "type":actionConstants.ADD_ITEM_FAILED,
-                            "error":"Failed to update item."+errorMessage
-                        })
-                        return;
+					case "getlist":
+						dispatch({
+							"type":actionConstants.FETCH_LIST_FAILED,
+							"error":"Failed to fetch shopping information."+errorMessage
+						})
+						return;
+					case "add":
+						dispatch({
+							"type":actionConstants.ADD_ITEM_FAILED,
+							"error":"Failed to add new item."+errorMessage
+						})
+						return;
+					case "remove":
+						dispatch({
+							"type":actionConstants.REMOVE_ITEM_FAILED,
+							"error":"Failed to remove item."+errorMessage
+						})
+						return;
+					case "edit":
+						dispatch({
+							"type":actionConstants.EDIT_ITEM_FAILED,
+							"error":"Failed to update item."+errorMessage
+						})
+						return;
 					default:
 						return;
 				}
@@ -217,67 +218,68 @@ const useAction = () => {
 			"error":error
 		})
 	}
-
-    const getList = (search) => {
-        let url = "/api/shopping";
-        if(search) {
-            url = url + "?type="+search;
-        }
-        setState({
-            "url":url,
-            "request":{
-                "method":"GET",
-                "headers":{
-                    "token":token
-                }
-            },
-            "action":"getlist"
-        })
-    }
-
-    const add = (item) => {
-        setState({
-            "url":"/api/shopping",
-            "request":{
-                "method":"POST",
-                "headers":{
-                    "Content-Type":"application/json",
-                    "token":token
-                },
-                "body":JSON.stringify(item)
-            }
-        })
-    }
-
-    const remove = (id) => {
-        setState({
-            "url":"/api/shopping"+id,
-            "request":{
-                "method":"DELETE",
-                "headers":{
-                    "token":token
-                }
-            },
-            "action":"remove"
-        })
-    }
-
-    const edit = (item) => {
-        setState({
-            "url":"/api/shopping/"+item._id,
-            "request":{
-                "method":"PUT",
-                "headers":{
-                    "Content-Type":"application/json",
-                    "token":token
-                },
-                "body":JSON.stringify(item)
-            },
-            "action":"edit"
-        })
-    }
 	
-	return {register,login,logout,setError,getList,remove,edit,add}
+	const getList = (search) => {
+		let url = "/api/shopping";
+		if(search) {
+			url = url + "?type="+search;
+		}
+		setState({
+			"url":url,
+			"request":{
+				"method":"GET",
+				"headers":{
+					"token":token
+				}
+			},
+			"action":"getlist"
+		})
+	}
+	
+	const add = (item) => {
+		setState({
+			"url":"/api/shopping",
+			"request":{
+				"method":"POST",
+				"headers":{
+					"Content-Type":"application/json",
+					"token":token
+				},
+				"body":JSON.stringify(item)
+			},
+			"action":"add"
+		})
+	}
+	
+	const remove = (id) => {
+		setState({
+			"url":"/api/shopping/"+id,
+			"request":{
+				"method":"DELETE",
+				"headers":{
+					"token":token
+				}
+			},
+			"action":"remove"
+		})
+	}
+	
+	const edit = (item) => {
+		setState({
+			"url":"/api/shopping/"+item._id,
+			"request":{
+				"method":"PUT",
+				"headers":{
+					"Content-Type":"application/json",
+					"token":token
+				},
+				"body":JSON.stringify(item)
+			},
+			"action":"edit"
+		})
+	}
+	
+	return {register,login,logout,setError,getList,add,remove,edit}
 }
 
 export default useAction;

@@ -26,7 +26,7 @@ const ShoppingList = (props) => {
 	}
 	
 	const searchByType = () => {
-		getList("",search.type);
+		getList(search.type);
 		setSearch({
 			type:""
 		})

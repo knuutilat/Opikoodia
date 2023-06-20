@@ -1,15 +1,23 @@
 import './App.css';
-import {useState,useEffect} from 'react';
+import {useEffect} from 'react';
 import ShoppingForm from './components/ShoppingForm';
 import ShoppingList from './components/ShoppingList';
 import Navbar from './components/Navbar';
 import LoginPage from './components/LoginPage';
 import {Routes,Route,Navigate} from 'react-router-dom';
 import useAppState from './hooks/useAppState';
+import useAction from './hooks/useAction';
 
 function App() {
 	
 	const {loading,error,isLogged} = useAppState();
+	const {getList} = useAction();
+	
+	useEffect(() => {
+		if(isLogged) {
+			getList();
+		}
+	},[isLogged])
 	
 	// RENDERING
 	
